@@ -1,7 +1,7 @@
 CCC-2021 - Karl Alberto
 ---
 
-# Guided Side App
+# Guided Side App - Control_Shift
 
 ## Minimum Features/Requirements
 
@@ -14,9 +14,8 @@ CCC-2021 - Karl Alberto
 
 ## "Tinder" for Custom Keyboards
 
-This app will act as a place for users to upload custom keyboard photos for people to vote/rate. The idea is for the app (in the future) to provide users with product recommendations for any of the following: keyboard size/layout preference; keycap profile; keycap designs; switch types and variations; etc.
+***Control_Shift*** app will act as a place for users to upload custom keyboard photos for people to vote/rate. The idea is for the app (in the future) to provide users with product recommendations for any of the following: keyboard size/layout preference; keycap profile; keycap designs; switch types and variations; etc.
 
-App name TBC.
 
 ## Trello Project Board
 
