@@ -30,7 +30,7 @@ def get_keyboard(id):
 def update_keyboard(id):
     keyboard = Keyboard.query.filter_by(keyboard_id=id)
     
-    updated_fields = keybaord_schema.dump(request.json)
+    updated_fields = keyboard_schema.dump(request.json)
     if updated_fields:
         keyboard.update(updated_fields)
     db.session.commit()
