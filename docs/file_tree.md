@@ -9,6 +9,7 @@ Control_Shift/
 ├─ templates/
 │  ├─ keyboard_schema.py
 ├─ tests/
+├─ commands.py
 ├─ config.py
 ├─ main.py
 .flaskenv
