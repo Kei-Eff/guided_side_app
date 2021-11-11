@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+    <br/>
+    <div>
+        <h2>New Keyboard</h2>
+        <div>
+            <form action ="/keyboards/" method="POST">
+                <input type="text" name="keyboard_name" placeholder="Keyboard Name..."/>
+                <button>Create</button>
+            </form>
+        </div>
+
+    </div>
+    <br/>
+    <h2>Keyboard List</h2>
+    {% for keyboard in page_data.keyboards %}
+        <a href="/keyboards/{{ keyboard.keyboard_id }}/">{{ keyboard.keyboard_name }}</a><br/>
+    {% endfor %}
+{% endblock %}

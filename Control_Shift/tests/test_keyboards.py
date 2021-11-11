@@ -18,10 +18,32 @@ class TestKeyboards(unittest.TestCase):
         data = response.get_json()
 
         self.assertEqual(response.status_code, 200)
-        self.assertIsInstance(data, list)
+        self.assertIn(b'<h1>Keyboard Index</h1>', response.data)
 
 
     def test_create_bad_keyboard(self):
-        response = self.client.post("/keyboards/", json={"keyboard_name": ""})
+        response = self.client.post("/keyboards/", data={"keyboard_name": ""})
         self.assertEqual(response.status_code, 400)
 
+    def test_create_good_keyboard(self):
+        response = self.client.post("/keyboards/", data={"keyboard_name": "testkeyboard"})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get_json()["keyboard_name"], "testkeyboard")
+        self.client.delete(f"/keyboards/{response.get_json()['keyboard_id']}/")
+    
+    def test_delete_keyboard(self):
+        response1 = self.client.post("/keyboards/", data={"keyboard_name": "testkeyboard"})
+        id = response1.get_json()["keyboard_id"]
+        
+        response2 = self.client.delete(f"keyboards/{id}/")
+        self.assertEqual(response2.status_code, 200)
+
+    def test_update_keyboard(self):
+        response1 = self.client.post("/keyboards/", data={"keyboard_name": "testkeyboard"})
+        id = response1.get_json()["keyboard_id"]
+
+        response2 = self.client.put(f"/keyboards/{id}", data={"keyboard_name": "newtestkeyboard"})
+        self.assertEqual(response2.status_code, 200)
+        self.assertEqual(response2.get_json()["keyboard_name"], "newtestkeyboard")
+
+        self.client.delete(f"/keyboards/{id}/")

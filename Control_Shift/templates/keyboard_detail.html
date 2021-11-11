@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h2>{{ page_data.keyboard.keyboard_name }}</h2>
+    <p>Keyboard ID: {{ page_data.keyboard.keyboard_id }}</p>
+
+    <form action="/keyboards/{{ page_data.keyboard.keyboard_id", method="POST">
+        <input type="text" name="keyboard_name" placeholder="Keyboard Name..."/>
+        
+        
+    </form>
+
+{% endblock %}
