@@ -27,15 +27,14 @@ class TestKeyboards(unittest.TestCase):
 
     def test_create_good_keyboard(self):
         response = self.client.post("/keyboards/", data={"keyboard_name": "testkeyboard"})
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.get_json()["keyboard_name"], "testkeyboard")
+        self.assertEqual(response.status_code, 302)
         self.client.delete(f"/keyboards/{response.get_json()['keyboard_id']}/")
     
     def test_delete_keyboard(self):
         response1 = self.client.post("/keyboards/", data={"keyboard_name": "testkeyboard"})
         id = response1.get_json()["keyboard_id"]
         
-        response2 = self.client.delete(f"keyboards/{id}/")
+        response2 = self.client.post(f"keyboards/{id}/delete/")
         self.assertEqual(response2.status_code, 200)
 
     def test_update_keyboard(self):
@@ -43,7 +42,7 @@ class TestKeyboards(unittest.TestCase):
         id = response1.get_json()["keyboard_id"]
 
         response2 = self.client.put(f"/keyboards/{id}", data={"keyboard_name": "newtestkeyboard"})
-        self.assertEqual(response2.status_code, 200)
+        self.assertEqual(response2.status_code, 302)
         self.assertEqual(response2.get_json()["keyboard_name"], "newtestkeyboard")
 
         self.client.delete(f"/keyboards/{id}/")
