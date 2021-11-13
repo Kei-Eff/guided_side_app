@@ -37,3 +37,17 @@ def sign_up():
     db.session.commit()
     login_user(new_user)
     return redirect(url_for("users.get_users"))
+
+@users.route("/users/login/", methods=["GET", "POST"])
+def log_in():
+    data = {"page_title": "Log In"}
+
+    if request.method == "GET":
+        return render_template("login.html", page_data = data)
+
+    user = user.query.filter_by(email=request.form["email"]).first()
+    if user and user.check_password(password=request.form["password"]):
+        login_user(user)
+        return redirect(url_for("keyboards.get_keyboards"))
+        
+    abort(401, "Login unsuccessful. Did you supply the correct username and password?")
