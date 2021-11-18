@@ -6,6 +6,8 @@
         <div>
             <form action ="/keyboards/" method="POST">
                 <input type="text" name="keyboard_name" placeholder="Keyboard Name..."/>
+                <input type="text" name="description" placeholder="Description..."/>
+                <input type="number" name="cost" placeholder="Cost..."/>
                 <button>Create</button>
             </form>
         </div>
@@ -14,6 +16,6 @@
     <br/>
     <h2>Keyboard List</h2>
     {% for keyboard in page_data.keyboards %}
-        <a href="/keyboards/{{ keyboard.keyboard_id }}/">{{ keyboard.keyboard_name }}</a><br/>
+        <a href="/keyboards/{{ keyboard.keyboard_id }}/">{{ keyboard.keyboard_name }} {{ keyboard.description }} </a> <br/>
     {% endfor %}
 {% endblock %}

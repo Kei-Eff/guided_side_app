@@ -3,6 +3,9 @@
 
     <h2>{{ page_data.keyboard.keyboard_name }}</h2>
     <p>Keyboard ID: {{ page_data.keyboard.keyboard_id }}</p>
+    <p>Keyboard Name: {{ page_data.keyboard.keyboard_name }}</p>
+    <p>Description: {{ page_data.keyboard.description }}</p>
+    <p>Cost: {{page_data.course.cost }}</p>
 
     <form action="/keyboards/{{ page_data.keyboard.keyboard_id", method="POST">
         <input type="text" name="keyboard_name" placeholder="Keyboard Name..."/>
