@@ -1,7 +1,7 @@
 from flask import Blueprint, request, render_template, redirect, url_for, abort
-from main import db, lm
+from main import db, lm 
 from models.users import User
-from schemas.user_schema import user_schema, multi_user_schema, user_update_schema
+from schemas.user_schema import users_schema, user_schema, user_update_schema
 from flask_login import login_user, logout_user, login_required, current_user
 from marshmallow import ValidationError
 
@@ -15,23 +15,25 @@ def unauthorized():
 
 users = Blueprint("users", __name__)
 
-@users.route("/users/signup/", methods=["GET"])
+@users.route("/users/", methods=["GET"])
 def get_users():
-    """Displays aa list of users from the database"""
+    """Displays a list of users from the database"""
     data = {
         "page_title": "User Index",
-        "users": multi_user_schema.dump(User.query.all())
+        "users": users_schema.dump(User.query.all())
     }
     return render_template("user_index.html", page_data=data)
+
 
 @users.route("/users/signup/", methods=["GET", "POST"])
 def sign_up():
     """Displays the signup form/creates a new user when the form is submitted"""
-    data = {"page_title": "Sign Up"}
+    
+    data = {"page_tite": "Sign Up"}
 
     if request.method == "GET":
         return render_template("signup.html", page_data=data)
-
+    
     new_user = user_schema.load(request.form)
     db.session.add(new_user)
     db.session.commit()
@@ -45,21 +47,22 @@ def log_in():
     if request.method == "GET":
         return render_template("login.html", page_data = data)
 
-    user = user.query.filter_by(email=request.form["email"]).first()
+    user = User.query.filter_by(email=request.form["email"]).first()
     if user and user.check_password(password=request.form["password"]):
         login_user(user)
         return redirect(url_for("keyboards.get_keyboards"))
-        
+
     abort(401, "Login unsuccessful. Did you supply the correct username and password?")
 
 @users.route("/users/account/", methods = ["GET", "POST"])
+@login_required
 def user_detail():
     if request.method == "GET":
         data = {"page_title": "Account Details"}
         return render_template("user_details.html", page_data = data)
 
     user = User.query.filter_by(id = current_user.id)
-    updated_fields = user_schema.dump(request.data)
+    updated_fields = user_schema.dump(request.form)
     errors = user_update_schema.validate(updated_fields)
 
     if errors:
@@ -69,8 +72,8 @@ def user_detail():
     db.session.commit()
     return redirect(url_for("users.get_users"))
 
-users.route("/users/logout/", methods=["POST"])
+@users.route("/users/logout/", methods=["POST"])
 @login_required
-def logout():
+def log_out():
     logout_user()
     return redirect(url_for("users.log_in"))

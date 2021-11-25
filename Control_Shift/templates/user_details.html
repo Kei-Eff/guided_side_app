@@ -13,5 +13,13 @@
         </form>
     </div>
 
+    <br><br>
+
+    <h3>Owned Keyboards:</h3>
+    <ul>
+        {% for keyboard in current_user.owned_keyboards %}
+            <li><a href="/keyboards/{{ keyboard_id }}/">{{ keyboard.keyboard_name }}</a></li>
+        {% endfor %}
+    </ul>
 
 {% endblock %}

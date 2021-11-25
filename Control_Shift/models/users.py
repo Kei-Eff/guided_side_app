@@ -23,5 +23,19 @@ class User(UserMixin, db.Model):
         nullable=False
     )
 
+    is_admin = db.Column(db.Boolean(), nullable=False, server_default="False")
+
+    is_superadmin = db.Column(db.Boolean(), nullable=False, server_default="False")
+
+    keyboards = db.relationship(
+        'Keyboard',
+        backref="creator"
+    )
+    # To access the list of keyboards created by the user, we call User.courses
+    # = [<Keyboard 1>, <Keyboard 2>, ...]
+
+    # To access the creator of Keeb, we call Keeb.creator
+    # = <User 'User'>
+
     def check_password(self, password):
         return check_password_hash(self.password, password)

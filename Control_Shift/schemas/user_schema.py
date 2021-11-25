@@ -17,6 +17,10 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
         load_only=True,
         deserialize="load_password"
     )
+    owned_keyboards = ma.Nested(
+        "KeyboardSchema",
+        only=("keyboard_id", "keyboard_name")
+    )
 
     def load_password(self, password):
         if len(password)>6:
